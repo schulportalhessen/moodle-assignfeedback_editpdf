@@ -428,7 +428,7 @@ class pdf extends TcpdfFpdi {
         $ex *= $this->scale;
         $ey *= $this->scale;
 
-        $this->SetLineWidth(3.0 * $this->scale);
+        $this->SetLineWidth(1.0 * $this->scale);
         switch ($type) {
             case 'oval':
                 $rx = abs($sx - $ex) / 2;
@@ -619,6 +619,15 @@ class pdf extends TcpdfFpdi {
             // PDF was not valid - try running it through ghostscript to clean it up.
             $pagecount = 0;
         }
+        
+        $outputdevice = "pdfwrite"; // This is our default.
+
+        // Check for annotations and force flattening.
+        if ($pagecount <= get_config('assignfeedback_editpdf', 'flatten') AND $pdf->has_annotations()) {
+            $outputdevice = "pdfimage24 -sCompression=JPEG -dJPEGQ=60 -r150";
+            $pagecount = 0;
+        }
+        
         $pdf->Close(); // PDF loaded and never saved/outputted needs to be closed.
 
         if ($pagecount > 0) {
@@ -632,7 +641,7 @@ class pdf extends TcpdfFpdi {
         $gsexec = \escapeshellarg($CFG->pathtogs);
         $tempdstarg = \escapeshellarg($tempdst);
         $tempsrcarg = \escapeshellarg($tempsrc);
-        $command = "$gsexec -q -sDEVICE=pdfwrite -dBATCH -dNOPAUSE -sOutputFile=$tempdstarg $tempsrcarg";
+        $command = "$gsexec -q -sDEVICE=$outputdevice -dBATCH -dNOPAUSE -dPDFSETTINGS=/screen -sOutputFile=$tempdstarg $tempsrcarg";
         exec($command);
         if (!file_exists($tempdst)) {
             // Something has gone wrong in the conversion.
@@ -780,12 +789,14 @@ class pdf extends TcpdfFpdi {
         $template = $this->importPage($this->currentpage);
         $size = $this->getTemplateSize($template);
 
+        $orientation = 'P';
         if ($imageinfo["width"] > $imageinfo["height"]) {
             if ($size['width'] < $size['height']) {
                 $temp = $size['width'];
                 $size['width'] = $size['height'];
                 $size['height'] = $temp;
             }
+            $orientation = 'L';
         } else if ($imageinfo["width"] < $imageinfo["height"]) {
             if ($size['width'] > $size['height']) {
                 $temp = $size['width'];
@@ -793,7 +804,7 @@ class pdf extends TcpdfFpdi {
                 $size['height'] = $temp;
             }
         }
-        $orientation = $size['orientation'];
+        
         $this->SetHeaderMargin(0);
         $this->SetFooterMargin(0);
         $this->SetMargins(0, 0, 0, true);
@@ -802,8 +813,18 @@ class pdf extends TcpdfFpdi {
 
         $this->AddPage($orientation, $size);
         $this->SetAutoPageBreak(false, 0);
-        $this->Image('@' . $imagecontent, 0, 0, $size['w'], $size['h'],
+        $this->Image('@' . $imagecontent, 0, 0, $size['width'], $size['height'],
             '', '', '', false, null, '', false, false, 0);
+    }
+    
+    /**
+     * Do we see any annotations in this pdf?
+     * Check to see if PDF has annotations, currently we assume all do.
+     *
+     * @return bool True if we spotted annotations.
+     */
+    public function has_annotations() {
+        return true;        
     }
 }
 

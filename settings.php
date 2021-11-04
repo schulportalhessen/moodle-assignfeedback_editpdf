@@ -38,6 +38,14 @@ $setting = new admin_setting_configstoredfile($name, $title, $description, 'stam
     array('maxfiles' => 8, 'accepted_types' => array('image')));
 $settings->add($setting);
 
+// Note that large pdfs are very slow and annotations go missing in big files. 
+$settings->add(new admin_setting_heading('limitations', get_string('limitations', 'assignfeedback_editpdf'), get_string('largedocs', 'assignfeedback_editpdf')));
+
+// Allow admin to determine up to which pagesize we want to flatten all files.
+$settings->add(new admin_setting_configtext('assignfeedback_editpdf/flatten',
+                   new lang_string('flatten', 'assignfeedback_editpdf'),
+                   new lang_string('flatten_help', 'assignfeedback_editpdf'), 10, PARAM_INT));
+            
 // Ghostscript setting.
 $systempathslink = new moodle_url('/admin/settings.php', array('section' => 'systempaths'));
 $systempathlink = html_writer::link($systempathslink, get_string('systempaths', 'admin'));

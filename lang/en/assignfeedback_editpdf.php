@@ -52,7 +52,10 @@ $string['errorpdfpage'] = 'There was an error while generating this page.';
 $string['editpdf'] = 'Annotate PDF';
 $string['editpdf_help'] = 'Annotate student submissions directly in the browser and produce an edited downloadable PDF.';
 $string['enabled'] = 'Annotate PDF';
-$string['enabled_help'] = 'If enabled, the teacher will be able to create annotated PDF files when marking assignment submissions. This allows the teacher to add comments, drawing and stamps directly on top of the student\'s work. The annotating is done in the browser and no extra software is required.';
+$string['enabled_help'] = 'If enabled, the teacher will be able to create annotated PDF files when marking assignment submissions. 
+    This allows the teacher to add comments, drawing and stamps directly on top of the student\'s work. 
+    The annotating is done in the browser and no extra software is required. 
+    Can be slow with large documents.';
 $string['expcolcomments'] = 'Expand/collapse all comments';
 $string['filter'] = 'Filter comments...';
 $string['generatefeedback'] = 'Generate feedback PDF';
@@ -109,3 +112,7 @@ $string['draftchangessaved'] = 'Draft annotations saved';
 $string['preparesubmissionsforannotation'] = 'Prepare submissions for annotation';
 $string['rotateleft'] = 'Rotate 90 degrees to the left';
 $string['rotateright'] = 'Rotate 90 degrees to the right';
+$string['limitations'] = 'Limitations';
+$string['largedocs'] = 'Large Documents can be very slow to process <br>Annotations may go missing in larger PDF documents, to remedy that we can flatten documents below a certain threshold.';
+$string['flatten'] = 'Flatten pages';
+$string['flatten_help'] = 'Configure up to what pagecount documents are flattened to retain students annotations.';
