@@ -84,7 +84,7 @@ var AJAXBASE = M.cfg.wwwroot + '/mod/assign/feedback/editpdf/ajax.php',
         'drag': '.dragbutton',
         'highlight': '.highlightbutton'
     },
-    STROKEWEIGHT = 4;
+    STROKEWEIGHT = 1;
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
