@@ -45,7 +45,25 @@ $settings->add(new admin_setting_heading('limitations', get_string('limitations'
 $settings->add(new admin_setting_configtext('assignfeedback_editpdf/flatten',
                    new lang_string('flatten', 'assignfeedback_editpdf'),
                    new lang_string('flatten_help', 'assignfeedback_editpdf'), 10, PARAM_INT));
-            
+
+$options = array(50 => '50', 60 => '60', 70 => '70', 80 => '80', 90 => '90', 100 => '100');
+$settings->add(new admin_setting_configselect(
+    'assignfeedback_editpdf_jpegq',
+    get_string('jpegq', 'assignfeedback_editpdf'),
+    get_string('configjpegq', 'assignfeedback_editpdf'),
+    '60',
+    $options
+));
+
+$options = array(100 => '100', 150 => '150', 200 => '200', 300 => '300');
+$settings->add(new admin_setting_configselect(
+    'assignfeedback_editpdf_resolution',
+    get_string('resolution', 'assignfeedback_editpdf'),
+    get_string('configresolution', 'assignfeedback_editpdf'),
+    '150',
+    $options
+));
+
 // Ghostscript setting.
 $systempathslink = new moodle_url('/admin/settings.php', array('section' => 'systempaths'));
 $systempathlink = html_writer::link($systempathslink, get_string('systempaths', 'admin'));

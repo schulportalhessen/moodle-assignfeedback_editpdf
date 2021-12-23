@@ -116,3 +116,9 @@ $string['limitations'] = 'Limitations';
 $string['largedocs'] = 'Large Documents can be very slow to process <br>Annotations may go missing in larger PDF documents, to remedy that we can flatten documents below a certain threshold.';
 $string['flatten'] = 'Flatten pages';
 $string['flatten_help'] = 'Configure up to what pagecount documents are flattened to retain students annotations.';
+
+$string['jpegq'] = 'Quality of jpeg';
+$string['configjpegq'] = 'eg. set Parameter -dJPEGQ to 60 value (pdfimage24 -sCompression=JPEG -dJPEGQ=60 -r150)';
+
+$string['resolution'] = 'Resolution';
+$string['configresolution'] = 'eg. set Parameter -r to 150 value (pdfimage24 -sCompression=JPEG -dJPEGQ=60 -r150)';

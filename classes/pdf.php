@@ -622,9 +622,23 @@ class pdf extends TcpdfFpdi {
         
         $outputdevice = "pdfwrite"; // This is our default.
 
+
+        if (isset($CFG->assignfeedback_editpdf_jpegq)) {
+            $jpgq = $CFG->assignfeedback_editpdf_jpegq;
+        } else {
+            $jpgq = "60";
+        }
+
+        if (isset($CFG->assignfeedback_editpdf_resolution)) {
+            $resolution = $CFG->assignfeedback_editpdf_resolution;
+        } else {
+            $resolution = "150";
+        }
+
         // Check for annotations and force flattening.
         if ($pagecount <= get_config('assignfeedback_editpdf', 'flatten') AND $pdf->has_annotations()) {
-            $outputdevice = "pdfimage24 -sCompression=JPEG -dJPEGQ=60 -r150";
+            // $outputdevice = "pdfimage24 -sCompression=JPEG -dJPEGQ=60 -r150";
+            $outputdevice = "pdfimage24 -sCompression=JPEG -dJPEGQ=$jpgq -r$resolution";
             $pagecount = 0;
         }
         
